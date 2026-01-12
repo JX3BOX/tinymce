@@ -1,0 +1,64 @@
+<h3>LaTeX 公式编辑器使用指南</h3>
+
+<h4>1. 行内公式 <span style="font-size: 12px; color: #666;">（文字中的小公式）</span></h4>
+<p>在文字中插入小型公式，有两种写法：</p>
+
+<h5>方法一：使用 <code>$</code> 单个美元符号</h5>
+<ul>
+    <li><strong>⌨️ 示例</strong>：勾股定理 <code>$a^2 + b^2 = c^2$</code></li>
+    <li><strong>🎉 效果</strong>：<span class="inline-example">$a^2 + b^2 = c^2$</span></li>
+</ul>
+
+<h5>方法二：使用 <code>\(\)</code> 括号</h5>
+<ul>
+    <li><strong>⌨️ 示例</strong>：爱因斯坦质能方程 <code>\(E = mc^2\)</code></li>
+    <li><strong>🎉 效果</strong>：<span class="inline-example">\(E = mc^2\)</span></li>
+</ul>
+
+<hr style="margin: 20px 0; border: none; border-top: 1px solid #e0e0e0;">
+
+<h4>2. 独立公式 <span style="font-size: 12px; color: #666;">（大型公式块）</span></h4>
+<p>对于需要突出显示的重要公式，使用块级显示：</p>
+
+<h5>方法一：使用 <code>$$</code> 双美元符号</h5>
+<ul>
+    <li><strong>⌨️ 示例</strong>：</li>
+</ul>
+<pre class="code-example">$$
+y = \sqrt{x_1^2 + x_2^2 + x_3^2 + x_4^2}
+$$</pre>
+<ul>
+    <li><strong>🎉 效果</strong>：</li>
+</ul>
+<div class="block-example">$$y = \sqrt{x_1^2 + x_2^2 + x_3^2 + x_4^2}$$</div>
+
+<h5>方法二：使用 <code>\[\]</code> 括号</h5>
+<ul>
+    <li><strong>⌨️ 示例</strong>：</li>
+</ul>
+<pre class="code-example">\[
+\int_0^\infty e^{-x^2} dx = \frac{\sqrt{\pi}}{2}
+\]</pre>
+<ul>
+    <li><strong>🎉 效果</strong>：</li>
+</ul>
+<div class="block-example">\[\int_0^\infty e^{-x^2} dx = \frac{\sqrt{\pi}}{2}\]</div>
+
+<div class="tip-box">
+    <strong>💡 提示：</strong>块级公式会自动居中显示，适合长公式或多行公式。
+</div>
+
+<hr style="margin: 20px 0; border: none; border-top: 1px solid #e0e0e0;">
+
+<h4>3. 源码指定（高级）</h4>
+<p>如果您精通 HTML，可以直接通过编辑源码，对包裹区使用特定的类 <code>.w-latex</code>，系统会自动处理换行和格式。</p>
+<ul>
+    <li><strong>⌨️ 示例</strong>：</li>
+</ul>
+<pre class="code-example">&lt;div class="w-latex"&gt;
+x = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}
+&lt;/div&gt;</pre>
+<ul>
+    <li><strong>🎉 效果</strong>：</li>
+</ul>
+<div class="block-example w-latex">x = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}</div>

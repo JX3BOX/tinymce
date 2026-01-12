@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="UTF-8" />
+        <title>LaTeX 编辑器</title>
+        <!-- 动态加载资源 -->
+        <script>
+            (function() {
+                // 从 URL 参数获取根路径
+                const urlParams = new URLSearchParams(window.location.search);
+                const ROOT = urlParams.get('root') || '';
+                const BASE_PATH = ROOT + '/plugins/latex/latex-dialog';
+
+                // 存储到全局，供其他脚本使用
+                window.LATEX_DIALOG_BASE = BASE_PATH;
+
+                // 动态加载 CSS
+                function loadCSS(href) {
+                    const link = document.createElement('link');
+                    link.rel = 'stylesheet';
+                    link.href = href;
+                    document.head.appendChild(link);
+                }
+
+                // 加载样式
+                loadCSS(BASE_PATH + '/index.css');
+                loadCSS(BASE_PATH + '/katex.min.css');
+            })();
+        </script>
+    </head>
+    <body>
+        <div class="container">
+            <!-- 左侧 -->
+            <div class="left">
+                <!-- Tabs + 外链 -->
+                <div class="tabs-header">
+                    <div class="tabs">
+                        <div class="tab active" data-tab="usage">使用方法</div>
+                        <div class="tab" data-tab="help">使用帮助</div>
+                    </div>
+
+                    <a class="external-link" href="https://www.latex-project.org/" target="_blank"> 查看文档 → </a>
+                </div>
+
+                <!-- Tab 内容 -->
+                <div class="tabs-content">
+                    <div class="tab-pane active" data-tab="usage">
+                        <!-- 先留空 -->
+                    </div>
+                    <div class="tab-pane" data-tab="help">
+                        <!-- 先留空 -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- 右侧 -->
+            <div class="right">
+                <!-- 输入区 -->
+                <textarea id="latex-input" placeholder="请输入 LaTeX 代码，例如：\frac{a}{b}"></textarea>
+
+                <!-- 渲染区 -->
+                <div id="latex-preview">
+                    <span class="placeholder">公式预览</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 底部按钮 -->
+        <div class="footer">
+            <button id="cancel">取消</button>
+            <button id="insert" class="primary">插入</button>
+        </div>
+
+        <!-- 动态加载 JS -->
+        <script>
+            (function() {
+                const urlParams = new URLSearchParams(window.location.search);
+                const ROOT = urlParams.get('root') || '';
+                const BASE_PATH = ROOT + '/plugins/latex/latex-dialog';
+
+                // 动态加载 JS
+                function loadScript(src) {
+                    return new Promise((resolve, reject) => {
+                        const script = document.createElement('script');
+                        script.src = src;
+                        script.onload = resolve;
+                        script.onerror = reject;
+                        document.body.appendChild(script);
+                    });
+                }
+
+                // 按顺序加载脚本
+                loadScript(BASE_PATH + '/katex.min.js')
+                    .then(() => loadScript(BASE_PATH + '/katex-standalone.js'))
+                    .then(() => loadScript(BASE_PATH + '/index.js'))
+                    .catch(err => console.error('脚本加载失败:', err));
+            })();
+        </script>
+    </body>
+</html>
