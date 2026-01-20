@@ -1409,7 +1409,7 @@
   box-sizing: border-box;
   background-color: #f1f8ff;
   border: 1px solid #c8e1ff;
-  color: darken(#c8e1ff, 20%);
+  color: #62a9ff;
   position: relative;
 
   line-height: 1.6 !important;
@@ -1424,8 +1424,7 @@
   content: "JX3BOX·AUDIO";
   position: absolute;
   right: 8px;
-  top: 50%;
-  transform: translateY(-50%);
+  top: 8px;
   background-color: #62a9ff;
   color: #fff;
   border-radius: 3px;
