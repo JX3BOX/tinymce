@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>配置音频资源</title>
+        <link rel="stylesheet" href="./index.css" />
+        <!-- 动态加载资源 -->
+        <script>
+            (function () {
+                // 从 URL 参数获取根路径
+                const urlParams = new URLSearchParams(window.location.search);
+                const ROOT = urlParams.get("root") || "";
+                const BASE_PATH = ROOT + "/plugins/voice/voice-dialog";
+
+                // 动态加载 CSS
+                function loadCSS(href) {
+                    const link = document.createElement("link");
+                    link.rel = "stylesheet";
+                    link.href = href;
+                    document.head.appendChild(link);
+                }
+
+                // 加载样式
+                loadCSS(BASE_PATH + "/index.css");
+            })();
+        </script>
+    </head>
+    <body>
+        <div class="content-container">
+            <!-- Radio Buttons -->
+            <div class="radio-group">
+                <label class="radio-label radio-active" id="label-upload">
+                    <input type="radio" name="source-type" value="upload" checked class="radio-input" onchange="toggleMode('upload')" />
+                    <span class="radio-text">本地上传</span>
+                </label>
+                <label class="radio-label" id="label-link">
+                    <input type="radio" name="source-type" value="link" class="radio-input" onchange="toggleMode('link')" />
+                    <span class="radio-text">外部链接</span>
+                </label>
+            </div>
+
+            <!-- 本地上传内容 -->
+            <div id="content-upload" class="content-section">
+                <div id="drop-zone" class="drop-zone" onclick="document.getElementById('file-input').click()">
+                    <input type="file" id="file-input" accept="audio/*" class="file-input" onchange="handleFileUpload(event)" />
+                    <svg class="icon-upload" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"
+                        ></path>
+                    </svg>
+                    <p class="drop-zone-text">点击或拖拽音频文件到此处</p>
+                    <p class="drop-zone-hint">支持 MP3, WAV, AAC (最大 20MB)</p>
+                </div>
+
+                <!-- 上传进度 -->
+                <div id="upload-status" class="upload-status hidden">
+                    <div class="upload-info">
+                        <div class="upload-header">
+                            <span class="filename" id="filename-display">文件名.mp3</span>
+                            <span class="percent" id="percent-display">0%</span>
+                        </div>
+                        <div class="progress-bar-container">
+                            <div id="progress-bar" class="progress-bar"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 上传结果 -->
+                <div id="upload-result" class="upload-result hidden">
+                    <label class="result-label">文件地址</label>
+                    <div class="result-input-group">
+                        <input type="text" id="uploaded-url" readonly class="result-input" value="" />
+                        <button onclick="copyUrl('uploaded-url')" class="btn-copy">
+                            <svg class="icon-copy" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"
+                                ></path>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 名称字段 -->
+                <div class="form-group">
+                    <label class="form-label">名称<span class="required">*</span></label>
+                    <input type="text" id="audio-name-upload" placeholder="请输入音频名称" class="form-input" />
+                    <p class="form-error hidden" id="name-error-upload">请输入音频名称</p>
+                </div>
+            </div>
+
+            <!-- 外部链接内容 -->
+            <div id="content-link" class="content-section hidden">
+                <div class="form-group">
+                    <label class="form-label">音频外链地址</label>
+                    <input type="url" id="audio-link-input" placeholder="https://example.com/audio.mp3" class="form-input" />
+                    <p class="form-hint">请输入有效的音频直链地址以确保正常播放。</p>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">名称<span class="required">*</span></label>
+                    <input type="text" id="audio-name-link" placeholder="请输入音频名称" class="form-input" />
+                    <p class="form-error hidden" id="name-error-link">请输入音频名称</p>
+                </div>
+            </div>
+            
+            <!-- 底部按钮 -->
+        </div>
+        <div class="footer">
+            <button id="cancel" class="tox-button tox-button--secondary" type="button">取消</button>
+            <button id="insert" class="tox-button" type="button">插入</button>
+        </div>
+
+        <!-- 动态加载 JS -->
+        <script>
+            (function() {
+                const urlParams = new URLSearchParams(window.location.search);
+                const ROOT = urlParams.get('root') || '';
+                const BASE_PATH = ROOT + '/plugins/voice/voice-dialog';
+
+                // 动态加载 JS
+                function loadScript(src) {
+                    return new Promise((resolve, reject) => {
+                        const script = document.createElement('script');
+                        script.src = src;
+                        script.onload = resolve;
+                        script.onerror = reject;
+                        document.body.appendChild(script);
+                    });
+                }
+
+                // 按顺序加载脚本
+                loadScript(BASE_PATH + '/index.js').catch(err => {
+                    console.error('Failed to load script:', err);
+                });
+            })();
+        </script>
+    </body>
+</html>

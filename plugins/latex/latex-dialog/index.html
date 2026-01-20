@@ -11,9 +11,6 @@
                 const ROOT = urlParams.get('root') || '';
                 const BASE_PATH = ROOT + '/plugins/latex/latex-dialog';
 
-                // 存储到全局，供其他脚本使用
-                window.LATEX_DIALOG_BASE = BASE_PATH;
-
                 // 动态加载 CSS
                 function loadCSS(href) {
                     const link = document.createElement('link');
@@ -67,8 +64,8 @@
 
         <!-- 底部按钮 -->
         <div class="footer">
-            <button id="cancel">取消</button>
-            <button id="insert" class="primary">插入</button>
+            <button id="cancel" class="tox-button tox-button--secondary" type="button">取消</button>
+            <button id="insert" class="tox-button" type="button">插入</button>
         </div>
 
         <!-- 动态加载 JS -->
