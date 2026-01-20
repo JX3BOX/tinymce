@@ -333,6 +333,7 @@ function init() {
                     name: name || '',
                     author: author || '',
                     user_id: userId,
+                    avatar: userInfo.user_avatar || '',
                     src: url
                 }
             },

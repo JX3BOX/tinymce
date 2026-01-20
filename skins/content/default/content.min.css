@@ -1409,18 +1409,23 @@
   box-sizing: border-box;
   background-color: #f1f8ff;
   border: 1px solid #c8e1ff;
-  color: #62a9ff;
-  line-height: 40px !important;
-  padding: 0 10px;
-  font-family: Monaco, Consolas, "Lucida Console", "Courier New", serif;
+  color: darken(#c8e1ff, 20%);
   position: relative;
-  *zoom: 1;
+
+  line-height: 1.6 !important;
+  padding: 10px;
+  padding-right: 135px;
+  font-family: Monaco, Consolas, "Lucida Console", "Courier New", serif;
+  word-break: break-all;
+  white-space: pre-wrap !important;
+  overflow-wrap: break-word;
 }
 .c-article-editor .e-audio:after {
   content: "JX3BOX·AUDIO";
   position: absolute;
   right: 8px;
-  top: 8px;
+  top: 50%;
+  transform: translateY(-50%);
   background-color: #62a9ff;
   color: #fff;
   border-radius: 3px;
