@@ -32,7 +32,7 @@ tinymce.init({
     toolbar: 'voice',
     // 设置根路径（可选）
     external_plugins: {
-        voice: '/path/to/plugins/voice/plugin.min.js'
+        voice: '/path/to/plugins/audiox/plugin.min.js'
     }
 });
 ```
